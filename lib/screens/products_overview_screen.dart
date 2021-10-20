@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shop/providers/cart.dart';
+import 'package:shop/screens/cart_screen.dart';
+import 'package:shop/widgets/badge.dart';
+import 'package:provider/provider.dart';
 
 import 'package:shop/widgets/products_grid.dart';
 
@@ -23,6 +27,18 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
       appBar: AppBar(
         title: const Text('MyShop'),
         actions: [
+          Consumer<Cart>(
+            builder: (_, cart, child) => Badge(
+              child: child,
+              value: cart.itemCount.toString(),
+            ),
+            child: IconButton(
+              icon: const Icon(Icons.shopping_cart),
+              onPressed: () {
+                Navigator.of(context).pushNamed(CartScreen.routeName);
+              },
+            ),
+          ),
           PopupMenuButton(
             onSelected: (FilterOptions selectedValue) {
               setState(() {
